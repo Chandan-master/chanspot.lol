@@ -1,0 +1,6 @@
+{
+  "name": "ChanSpot: Walking Billboard",
+  "description": "Physical media advertising marketplace where brands bid on wardrobe spots for real-world college and daily IRL exposure.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
