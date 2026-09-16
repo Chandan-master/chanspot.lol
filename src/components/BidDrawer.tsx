@@ -172,21 +172,28 @@ export const BidDrawer: React.FC<BidDrawerProps> = ({
       }
 
       // 3. Call the create-checkout Edge Function and redirect to payment
-      console.log("CHECKOUT DATA:", {
-        spotId: spot.id,
-        amount: parsedBid,
-      });
+      const view = String(spot.view || '').toLowerCase();
 
-      const { data: checkoutData, error: checkoutErr } = await supabase.functions.invoke(
-        'create-checkout',
-        {
+      const checkoutSpotId =
+        view === 'front'
+          ? `front-${spot.id.replace(/^spot-(?:front-)?/, '')}`
+          : `back-${spot.id.replace(/^spot-(?:back-)?/, '')}`;
+      console.log("CHECKOUT DATA:", {
+        originalSpotId: spot.id,
+        view: spot.view,
+        finalSpotId: checkoutSpotId,
+        amount: parsedBid,
+        sponsorId: sponsor.id,
+      });
+      const { data: checkoutData, error: checkoutErr } =
+        await supabase.functions.invoke('create-checkout', {
           body: {
-            spotId: spot.id.replace(/^spot-/, ""),
+            spotId: checkoutSpotId,
             amount: parsedBid,
             sponsorId: sponsor.id,
           },
-        }
-      );
+        });
+
 
       if (checkoutErr) {
         setError(`Payment setup failed: ${checkoutErr.message}`);

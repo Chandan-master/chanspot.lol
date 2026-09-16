@@ -1,6 +1,7 @@
 export interface Spot {
   id: string;
   name: string;
+  side: 'front' | 'back';
   view: 'front' | 'back';
   zone: string;
   isShirt: boolean;

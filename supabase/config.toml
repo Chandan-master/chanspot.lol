@@ -1,2 +1,5 @@
+[functions.create-checkout]
+verify_jwt = false
+
 [functions.dodo-webhook]
 verify_jwt = false
